@@ -32,7 +32,10 @@ enum CheckoutTableSection : Int {
 //Default behavior for an int-enum is to auto-increment starting at 0
 
 CheckoutTableSection.Error.rawValue
+
 CheckoutTableSection(rawValue: 5) == CheckoutTableSection.Billing
+//Find corresponding enum for a primitive value (may be nil)
+
 if let section = CheckoutTableSection(rawValue: 4) {
     switch (section) {
     case .Login:
@@ -50,7 +53,8 @@ enum Currency : String {
     case EUR = "EUR"
     case GBP = "GBP"
 }
-Currency.EUR//"Enum Value", use for comparison
+Currency.EUR // "Enum Value", use for comparison
+Currency.EUR == Currency.USD // False
 Currency.EUR.rawValue
 
 
@@ -73,10 +77,10 @@ enum HttpCode : Int {
     case GatewayTimeout = 504
 }
 
-let resp1 = NetworkResponse.Failure(.BadGateway, "Bad Gateway")
+let resp1 = NetworkResponse.Failure(.BadGateway, "Something went wrong")
 let resp2 = NetworkResponse.Success(.OK)
 
-
+// Decomposition via switch/case
 switch (resp1) {
 //case var .Failure(code, msg):
 //case .Failure(var code, var msg):
@@ -85,9 +89,11 @@ case .Failure(let code, var msg):
 case .Success(var code):
     println(code)
 }
+// This decomposition seems to be the only way to consume Associated Values Enums
+
 
 /**
-Notes:
- - Enumarate over enums? NOPE
+Final Notes:
+ - Enumerate over enum-members? NOPE (nothing native)
 */
 
