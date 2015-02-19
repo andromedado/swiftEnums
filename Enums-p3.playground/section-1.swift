@@ -79,18 +79,50 @@ enum HttpCode : Int {
 
 let resp1 = NetworkResponse.Failure(.BadGateway, "Something went wrong")
 let resp2 = NetworkResponse.Success(.OK)
+let resp3 = NetworkResponse.Failure(.BadGateway, "Something went wrong")
 
 // Decomposition via switch/case
+
 switch (resp1) {
+
 //case var .Failure(code, msg):
 //case .Failure(var code, var msg):
 case .Failure(let code, var msg):
     println("oh yeah!: \(msg)")
+
 case .Success(var code):
     println(code)
+
 }
 // This decomposition seems to be the only way to consume Associated Values Enums
+// NOT this style:
+// let NetworkResponse.Failure(a, b) = resp1
+// NOR
+// if resp1 == .Failure(var code, var msg) {}
 
+//Associated Values Equality Testing must be defined in userland
+func ==(a : NetworkResponse, b : NetworkResponse) -> Bool {
+    switch (a) {
+    case let .Success(code):
+        switch (b) {
+        case let .Success(bCode):
+            return code == bCode
+        case let .Failure(bCode, bMsg):
+            return false
+        }
+    case let .Failure(code, msg):
+        switch (b) {
+        case let .Success(bCode):
+            return false
+        case let .Failure(bCode, bMsg):
+            return bCode == code && msg == bMsg
+        }
+    }
+}
+
+
+resp1 == resp2
+resp1 == resp3
 
 /**
 Final Notes:
