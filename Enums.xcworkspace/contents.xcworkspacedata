@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Enum-SwiftStudy.playground">
+   </FileRef>
+   <FileRef
+      location = "container:Enums-p2.playground">
+   </FileRef>
+   <FileRef
+      location = "group:Enums-p3.playground">
+   </FileRef>
+</Workspace>
